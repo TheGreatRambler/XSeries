@@ -547,7 +547,7 @@ public final class XBlock {
         BlockState state = door.getState();
         if (ISFLAT) {
             org.bukkit.block.data.BlockData data = state.getBlockData();
-            org.bukkit.block.data.Bisected bisected = (org.bukkit.block.data.Bisected) data;
+            org.bukkit.block.data.type.Door bisected = (org.bukkit.block.data.type.Door) data;
             if (top) {
 				bisected.setHalf(org.bukkit.block.data.Bisected.Half.TOP);
 			} else {
