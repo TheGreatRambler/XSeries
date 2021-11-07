@@ -543,6 +543,23 @@ public final class XBlock {
         state.update(true);
     }
 
+    public static void setDoorTop(Block door, boolean top) {
+        BlockState state = door.getState();
+        if (ISFLAT) {
+            org.bukkit.block.data.BlockData data = state.getBlockData();
+            org.bukkit.block.data.Bisected bisected = (org.bukkit.block.data.Bisected) data;
+            if (top) {
+				bisected.setHalf(org.bukkit.block.data.Bisected.Half.TOP);
+			} else {
+				bisected.setHalf(org.bukkit.block.data.Bisected.Half.BOTTOM);
+			}
+            state.setBlockData(bisected);
+        } else {
+            state.setRawData((byte) (top ? 8 : 4));
+        }
+        state.update(true);
+    }
+
     /**
      * @param block the block to get its XMaterial type.
      *

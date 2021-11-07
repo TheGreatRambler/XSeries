@@ -29,3 +29,8 @@ target/
 repo/
 out/
 META-INF/
+
+.settings
+.vscode
+.classpath
+.project
