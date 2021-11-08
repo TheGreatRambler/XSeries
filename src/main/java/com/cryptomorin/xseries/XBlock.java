@@ -560,6 +560,16 @@ public final class XBlock {
         state.update(true);
     }
 
+	public static void setBed(Block start, BlockFace facing, Material material) {
+		for (org.bukkit.block.data.type.Bed.Part part : org.bukkit.block.data.type.Bed.Part.values()) {
+			start.setBlockData(org.bukkit.Bukkit.createBlockData(material, (data) -> {
+				((org.bukkit.block.data.type.Bed) data).setPart(part);
+				((org.bukkit.block.data.type.Bed) data).setFacing(facing);
+			}));
+			start = start.getRelative(facing.getOppositeFace());
+		}
+	}
+
     /**
      * @param block the block to get its XMaterial type.
      *
