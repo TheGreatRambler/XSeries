@@ -22,6 +22,7 @@
 package com.cryptomorin.xseries;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.Axis;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
@@ -29,6 +30,7 @@ import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.data.Orientable;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.material.*;
 
@@ -225,6 +227,25 @@ public final class XBlock {
         MaterialData data = state.getData();
         if (data instanceof Directional) {
             ((Directional) data).setFacingDirection(facing);
+            state.update(true);
+            return true;
+        }
+        return false;
+    }
+
+	public static boolean setOrient(Block block, Axis facing) {
+        if (ISFLAT) {
+            if (!(block.getBlockData() instanceof org.bukkit.block.data.Orientable)) return false;
+            org.bukkit.block.data.Orientable orientable = (org.bukkit.block.data.Orientable) block.getBlockData();
+            orientable.setAxis(facing);
+			block.setBlockData(orientable);
+            return true;
+        }
+
+        BlockState state = block.getState();
+        MaterialData data = state.getData();
+        if (data instanceof Orientable) {
+            ((Orientable) data).setAxis(facing);
             state.update(true);
             return true;
         }
