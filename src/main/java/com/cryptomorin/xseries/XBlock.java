@@ -22,7 +22,6 @@
 package com.cryptomorin.xseries;
 
 import org.apache.commons.lang.Validate;
-import org.bukkit.Axis;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
@@ -233,23 +232,43 @@ public final class XBlock {
         return false;
     }
 
-	public static boolean setOrient(Block block, Axis facing) {
+	public static boolean setOrient(Block block, int facing) {
         if (ISFLAT) {
             if (!(block.getBlockData() instanceof org.bukkit.block.data.Orientable)) return false;
             org.bukkit.block.data.Orientable orientable = (org.bukkit.block.data.Orientable) block.getBlockData();
-            orientable.setAxis(facing);
+
+			if (block.getType() == Material.NETHER_PORTAL) {
+				switch(facing) {
+					case 0:
+						orientable.setAxis(org.bukkit.Axis.X);
+						break;
+					case 1:
+						orientable.setAxis(org.bukkit.Axis.Z);
+						break;
+				}
+			} else {
+				switch(facing) {
+					case 0:
+						orientable.setAxis(org.bukkit.Axis.X);
+						break;
+					case 1:
+						orientable.setAxis(org.bukkit.Axis.Y);
+						break;
+					case 2:
+						orientable.setAxis(org.bukkit.Axis.Z);
+						break;
+				}
+			}
+
 			block.setBlockData(orientable);
             return true;
         }
 
         BlockState state = block.getState();
         MaterialData data = state.getData();
-        if (data instanceof Orientable) {
-            ((Orientable) data).setAxis(facing);
-            state.update(true);
-            return true;
-        }
-        return false;
+        data.setData((byte) facing);
+        state.update(true);
+		return true;
     }
 
     public static boolean setType(@Nonnull Block block, @Nullable XMaterial material) {
