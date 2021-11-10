@@ -242,7 +242,7 @@ public final class XBlock {
 					case 0:
 						orientable.setAxis(org.bukkit.Axis.X);
 						break;
-					case 1:
+					case 2:
 						orientable.setAxis(org.bukkit.Axis.Z);
 						break;
 				}
