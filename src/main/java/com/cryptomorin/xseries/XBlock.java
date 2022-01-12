@@ -247,13 +247,13 @@ public final class XBlock {
 			} else {
 				switch(facing) {
 					case 0:
-						orientable.setAxis(org.bukkit.Axis.X);
-						break;
-					case 1:
 						orientable.setAxis(org.bukkit.Axis.Y);
 						break;
-					case 2:
+					case 1:
 						orientable.setAxis(org.bukkit.Axis.Z);
+						break;
+					case 2:
+						orientable.setAxis(org.bukkit.Axis.X);
 						break;
 				}
 			}
@@ -267,13 +267,13 @@ public final class XBlock {
 		Orientable orientable = (Orientable) state.getData();
 		switch(facing) {
 			case 0:
-				orientable.setAxis(org.bukkit.Axis.X);
-				break;
-			case 1:
 				orientable.setAxis(org.bukkit.Axis.Y);
 				break;
-			case 2:
+			case 1:
 				orientable.setAxis(org.bukkit.Axis.Z);
+				break;
+			case 2:
+				orientable.setAxis(org.bukkit.Axis.X);
 				break;
 		}
 		state.setData((MaterialData) orientable);
