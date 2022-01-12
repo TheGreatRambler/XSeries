@@ -209,9 +209,8 @@ public final class XBlock {
 		}
 
 		BlockState state = block.getState();
-		MaterialData data = state.getData();
-		if (data instanceof org.bukkit.material.Directional) return ((org.bukkit.material.Directional) data).getFacing();
-		return BlockFace.SELF;
+		if (!(state instanceof Directional)) return BlockFace.SELF;
+		return ((Directional) state.getData()).getFacing();
 	}
 
 	public static boolean setDirection(Block block, BlockFace facing) {
@@ -223,13 +222,12 @@ public final class XBlock {
 		}
 
 		BlockState state = block.getState();
-		MaterialData data = state.getData();
-		if (data instanceof Directional) {
-			((Directional) data).setFacingDirection(facing);
-			state.update(true);
-			return true;
-		}
-		return false;
+		if (!(state instanceof Directional)) return false;
+		Directional directional = (Directional) state.getData();
+		directional.setFacingDirection(facing);
+		state.setData((MaterialData) directional);
+		state.update();
+		return true;
 	}
 
 	public static boolean setOrient(Block block, int facing) {
@@ -265,9 +263,21 @@ public final class XBlock {
 		}
 
 		BlockState state = block.getState();
-		MaterialData data = state.getData();
-		data.setData((byte) facing);
-		state.update(true);
+		if (!(state instanceof Orientable)) return false;
+		Orientable orientable = (Orientable) state.getData();
+		switch(facing) {
+			case 0:
+				orientable.setAxis(org.bukkit.Axis.X);
+				break;
+			case 1:
+				orientable.setAxis(org.bukkit.Axis.Y);
+				break;
+			case 2:
+				orientable.setAxis(org.bukkit.Axis.Z);
+				break;
+		}
+		state.setData((MaterialData) orientable);
+		state.update();
 		return true;
 	}
 
